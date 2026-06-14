@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Falaki Abu Ma'syar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div class="bg-indigo-900 p-8 text-white">
+            <h1 class="text-3xl font-bold">Kalkulator Falaki</h1>
+            <p class="text-indigo-200 mt-2">Berdasarkan Kaidah Kitab Abu Ma'syar Al-Falaki</p>
+        </div>
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir (Pasangan 1)</label>
+                    <input type="date" id="dob1" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir (Pasangan 2)</label>
+                    <input type="date" id="dob2" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Keperluan</label>
+                    <select id="purpose" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="pindah">Pindah Rumah</option>
+                        <option value="menikah">Menikah</option>
+                        <option value="usaha">Mulai Usaha</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Arah Bangunan</label>
+                    <select id="direction" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="selatan">Selatan</option>
+                        <option value="utara">Utara</option>
+                        <option value="timur">Timur</option>
+                        <option value="barat">Barat</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition duration-300">
+                Hitung Waktu Terbaik
+            </button>
+        </div>
+
+        <div id="result" class="p-8 border-t border-gray-100 hidden">
+            <h2 class="text-2xl font-bold mb-6">Hasil Analisis</h2>
+            <div id="resultContent" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const dob1 = document.getElementById('dob1').value;
+            const dob2 = document.getElementById('dob2').value;
+            const purpose = document.getElementById('purpose').value;
+            const direction = document.getElementById('direction').value;
+
+            if(!dob1 || !dob2) {
+                alert("Mohon masukkan tanggal lahir dengan benar.");
+                return;
+            }
+
+            const container = document.getElementById('resultContent');
+            // Memperbaiki kesalahan Illegal invocation dengan memanggil langsung
+            document.getElementById('result').classList.remove('hidden');
+
+            let days = [];
+            let time = "";
+            let months = "";
+            let advice = "";
+            // New Variable for Hijriah
+            let hijriahDates = "7, 14, atau 21";
+
+            if(purpose === 'pindah') {
+                days = ["Senin", "Kamis"];
+                time = "Senin: 06.00-07.00 atau 13.00-14.00. Kamis: 06.00-07.00 atau 13.00-14.00.";
+                advice = "Dahulukan kaki kanan, bawa air bersih dan Al-Qur'an.";
+            } else if (purpose === 'menikah') {
+                days = ["Jumat", "Kamis"];
+                time = "Jumat: Pagi hari sebelum Dzuhur.";
+                advice = "Utamakan akad di hari Jumat untuk keberkahan cinta.";
+                hijriahDates = "1, 10, atau 17";
+            } else {
+                days = ["Kamis"];
+                time = "Kamis: 06.00-07.00.";
+                advice = "Mulai saat matahari terbit untuk kesuksesan usaha.";
+                hijriahDates = "5, 12, atau 25";
+            }
+
+            if(direction === 'selatan') {
+                months = "Safar atau Jumadil Akhir";
+            } else if (direction === 'barat') {
+                months = "Muharram atau Safar";
+            } else {
+                months = "Rajab atau Ramadan";
+            }
+
+            container.innerHTML = `
+                <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100">
+                    <p class="font-bold text-indigo-900">Hari Terbaik:</p>
+                    <p class="text-indigo-700">${days.join(", ")}</p>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                    <p class="font-bold text-emerald-900">Bulan Rekomendasi (Arah ${direction.toUpperCase()}):</p>
+                    <p class="text-emerald-700">${months}</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                    <p class="font-bold text-blue-900">Tanggal Hijriah Terbaik:</p>
+                    <p class="text-blue-700">Tanggal ${hijriahDates} dari bulan yang disarankan.</p>
+                </div>
+                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100">
+                    <p class="font-bold text-amber-900">Jam (Sa'at) Terbaik:</p>
+                    <p class="text-amber-700">${time}</p>
+                </div>
+                <div class="text-gray-600 mt-4 italic">
+                    Catatan: ${advice} Hindari Hari Selasa dan Sabtu.
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
