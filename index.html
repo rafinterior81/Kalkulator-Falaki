@@ -21,12 +21,12 @@
         <div class="p-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir (Pasangan 1)</label>
-                    <input type="date" id="dob1" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir Anda</label>
+                    <input type="text" id="dob1" placeholder="Contoh: 05/07/1981" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir (Pasangan 2)</label>
-                    <input type="date" id="dob2" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <label class="block text-sm font-semibold mb-2">Tanggal Lahir Pasangan</label>
+                    <input type="text" id="dob2" placeholder="Contoh: 26/06/1991" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold mb-2">Keperluan</label>
@@ -65,19 +65,17 @@
             const direction = document.getElementById('direction').value;
 
             if(!dob1 || !dob2) {
-                alert("Mohon masukkan tanggal lahir dengan benar.");
+                alert("Mohon masukkan tanggal lahir Anda dan pasangan.");
                 return;
             }
 
             const container = document.getElementById('resultContent');
-            // Memperbaiki kesalahan Illegal invocation dengan memanggil langsung
             document.getElementById('result').classList.remove('hidden');
 
             let days = [];
             let time = "";
             let months = "";
             let advice = "";
-            // New Variable for Hijriah
             let hijriahDates = "7, 14, atau 21";
 
             if(purpose === 'pindah') {
